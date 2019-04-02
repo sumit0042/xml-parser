@@ -1,0 +1,59 @@
+
+<!-- Upload form  -->
+
+<h2></h2>
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><strong>Upload Files</strong></div>
+    <div class="panel-body">
+
+      <h4>Select files from your computer</h4>
+      <form action="http://localhost:8080/upload" method="post" enctype="multipart/form-data" id="js-upload-form">
+        <div class="form-inline">
+          <div class="form-group">
+            <input #fileInput type="file" [(ngModel)]="file" name="files[]" accept=".xml"  id="js-upload-files" multiple>
+          </div>
+          <button type="submit" (click)="upload()" class="btn btn-sm btn-primary" id="js-upload-submit">Upload files</button>
+        </div>
+      </form>
+
+      <h2></h2>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Table for report -->
+
+<table *ngIf="ifUploaded" class="table table-hover">
+  <thead>
+    <tr>
+      <th>Vehicle Name</th>
+      <th>Id</th>
+      <th>Frame</th>
+      <th>Power train</th>
+      <th>Wheels</th>
+      <th>Timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of items">
+      <td>{{item.name}}</td>
+      <td>{{item.id}}</td>
+      <td>{{item.frame}}</td>
+      <td>{{item.power}}</td>
+      <td>
+          <p *ngFor="let wheel of item.wheels; let i = index">{{i+1}} {{wheel.join(" at ")}}</p>
+      </td>
+      <td>{{item.timeStamp}}</td>
+    </tr> 
+  </tbody>
+</table>
+
+
+<!-- table for error message -->
+
+<div *ngIf="failed" class="alert alert-warning" role="alert">
+Failed to process. Try another file
+</div>
